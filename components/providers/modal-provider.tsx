@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { CreateServerModal } from "@/components/modals/create-server-modal";
 import { useModal } from "@/hooks/use-modal-store";
 import { InviteModal } from "@/components/modals/invite-modal";
+import { EditServerModal } from "@/components/modals/edit-server-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -21,6 +22,7 @@ export const ModalProvider = () => {
       {/* Conditionally render the modal */}
       <CreateServerModal />
       <InviteModal />
+      <EditServerModal />
     </>
   );
 };
