@@ -10,6 +10,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 // Import local fonts
 const geistSans = localFont({
@@ -56,7 +57,13 @@ export default function RootLayout({
         <body
           className={`${merriweather.variable} ${robotoSlab.variable} ${alegreya.variable} antialiased`} // Ensure body gets the dark class from ThemeProvider
         >
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            storageKey="discord-theme"
+          >
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </body>
