@@ -11,6 +11,7 @@ import {
 } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ModalProvider } from "@/components/providers/modal-provider";
+import { SocketProvider } from "@/components/providers/socket-providers";
 
 // Import local fonts
 const geistSans = localFont({
@@ -63,8 +64,10 @@ export default function RootLayout({
             enableSystem={false}
             storageKey="discord-theme"
           >
-            <ModalProvider />
-            {children}
+            <SocketProvider>
+              <ModalProvider />
+              {children}
+            </SocketProvider>
           </ThemeProvider>
         </body>
       </html>
