@@ -25,6 +25,7 @@
 }
 
 body {
+  height: 100%;
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-roboto-slab), roboto; /* Use Alegreya as the font */
