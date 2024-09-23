@@ -1,6 +1,5 @@
-// chat-message.tsx
 "use client"; // Add this line to make it a client component
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { Member, Message, Profile } from "@prisma/client";
 import { ChatWelcome } from "./chat-welcome";
 import { useChatQuery } from "@/hooks/use-chat-query";
@@ -9,6 +8,7 @@ import { ChatItem } from "./chat-item";
 import { format } from "date-fns";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
+
 type MessageWithMemberWithProfile = Message & {
   member: Member & {
     profile: Profile;
@@ -47,6 +47,14 @@ export const ChatMessages = ({
       paramValue,
     });
 
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [data]); // Trigger when data (messages) is updated
+
   if (status === "pending") {
     return (
       <div className="flex flex-col h-full justify-center items-center flex-1 ">
@@ -61,7 +69,7 @@ export const ChatMessages = ({
   if (status === "error") {
     return (
       <div className="flex flex-col h-full justify-center items-center flex-1 ">
-        <ServerCrash className="h-7 w-7 text-zinc-500  my-4" />
+        <ServerCrash className="h-7 w-7 text-zinc-500 my-4" />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
           Something went wrong!
         </p>
@@ -73,6 +81,7 @@ export const ChatMessages = ({
     <div className="flex-1 flex flex-col py-4 overflow-y-auto">
       <div className="flex-1" />
       <ChatWelcome type={type} name={name} />
+
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
@@ -93,6 +102,9 @@ export const ChatMessages = ({
             ))}
           </Fragment>
         ))}
+
+        {/* Invisible div to anchor scroll to bottom */}
+        <div ref={scrollRef} />
       </div>
     </div>
   );

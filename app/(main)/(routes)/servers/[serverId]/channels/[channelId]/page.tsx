@@ -45,7 +45,7 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
       />
 
       {/* Scrollable chat messages in the middle */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto flex flex-col-reverse">
         <ChatMessages
           member={member}
           name={channel.name}
@@ -74,7 +74,6 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
       />
     </div>
   );
-
 };
 
 export default ChannelIdPage;
