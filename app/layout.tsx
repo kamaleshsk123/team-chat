@@ -12,6 +12,7 @@ import {
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { SocketProvider } from "@/components/providers/socket-providers";
+import { QueryProvider } from "@/components/providers/query-providers";
 
 // Import local fonts
 const geistSans = localFont({
@@ -66,7 +67,7 @@ export default function RootLayout({
           >
             <SocketProvider>
               <ModalProvider />
-              {children}
+              <QueryProvider>{children}</QueryProvider>
             </SocketProvider>
           </ThemeProvider>
         </body>
