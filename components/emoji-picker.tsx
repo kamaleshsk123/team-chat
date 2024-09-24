@@ -16,6 +16,10 @@ interface EmojiPickerProps {
 }
 export const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
   const { resolvedTheme } = useTheme();
+  type Emoji = {
+    native: string; // Adjust the structure based on your emoji type
+    // Add more fields if necessary, e.g., unified, shortcodes, etc.
+  };
   return (
     <Popover>
       <PopoverTrigger>
@@ -29,7 +33,7 @@ export const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
         <Picker
           theme={resolvedTheme}
           data={data}
-          onEmojiSelect={(emoji: any) => onChange(emoji.native)}
+          onEmojiSelect={(emoji: Emoji) => onChange(emoji.native)}
         />
       </PopoverContent>
     </Popover>

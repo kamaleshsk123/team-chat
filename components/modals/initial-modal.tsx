@@ -39,7 +39,7 @@ const formSchema = z.object({
 
 export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl] = useState("");
   const router = useRouter();
 
   useEffect(() => {
