@@ -13,6 +13,15 @@ type MessageWithMemberWithProfile = Message & {
   member: Member & { profile: Profile };
 };
 
+interface OldData {
+  pages: Page[];
+}
+
+interface Page {
+  items: MessageWithMemberWithProfile[];
+  // Include other properties if needed
+}
+
 export const useChatSocket = ({
   addKey,
   updateKey,
@@ -28,7 +37,7 @@ export const useChatSocket = ({
 
     // Handle adding new messages
     socket.on(addKey, (message: MessageWithMemberWithProfile) => {
-      queryClient.setQueryData([queryKey], (oldData: any) => {
+      queryClient.setQueryData<OldData>([queryKey], (oldData) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return {
             pages: [{ items: [message] }],
@@ -47,20 +56,20 @@ export const useChatSocket = ({
 
     // Handle updating existing messages
     socket.on(updateKey, (updatedMessage: MessageWithMemberWithProfile) => {
-      queryClient.setQueryData([queryKey], (oldData: any) => {
+      queryClient.setQueryData<OldData>([queryKey], (oldData) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
-          return oldData;
+          return oldData; // Early return if there's no data
         }
 
-        const newData = oldData.pages.map((page: any) => {
+        const newData = oldData.pages.map((page: Page) => {
           return {
             ...page,
             items: page.items.map((item: MessageWithMemberWithProfile) => {
               // Check if the message ID matches the updated message ID
               if (item.id === updatedMessage.id) {
-                return updatedMessage;
+                return updatedMessage; // Return the updated message
               }
-              return item;
+              return item; // Return the original item
             }),
           };
         });
