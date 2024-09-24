@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import qs from "query-string";
 
 import { useModal } from "@/hooks/use-modal-store";
